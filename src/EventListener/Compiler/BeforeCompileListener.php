@@ -64,19 +64,19 @@ class BeforeCompileListener
      */
     private function createPackagesFile(array $files): void
     {
-        $objFile = new File($path = self::PACKAGE_DIR . '/' . self::PACKAGE_NAME);
+        $objFile = new File(self::PACKAGE_DIR . '/' . self::PACKAGE_NAME);
         $blnSuccess = $objFile->write($this->createPackagesSCSS());
         $objFile->close();
 
-        if ($blnSuccess)
+        if ($blnSuccess && !empty($files))
         {
-            $this->compiler->add($path);
+            $this->compiler->msg('Packages', FileCompiler::MSG_HEAD);
+            $this->compiler->msg('Found ' . count($this->files) . ' package skin file(s)', FileCompiler::MSG_SUCCESS);
+            $this->compiler->msg('File saved: ' .self::PACKAGE_DIR . '/' . self::PACKAGE_NAME, FileCompiler::MSG_SUCCESS);
 
-            if (!empty($files))
+            if (null !== ($uuid = $objFile->getModel()->uuid))
             {
-                $this->compiler->msg('Packages', FileCompiler::MSG_HEAD);
-                $this->compiler->msg('Found ' . count($this->files) . ' package skin file(s)', FileCompiler::MSG_SUCCESS);
-                $this->compiler->msg('File saved: ' .self::PACKAGE_DIR . '/' . self::PACKAGE_NAME, FileCompiler::MSG_SUCCESS);
+                $this->compiler->customSkinFiles[] = $uuid;
             }
         }
     }
