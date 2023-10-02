@@ -26,8 +26,8 @@
     "contao-thememanager/core": "^2.0",
     "contao/core-bundle": "^4.13 || 5.1.* || 5.2.*",
     "oveleon/contao-theme-compiler-bundle": "^1.6",
+    "oveleon/product-installer": "*",
     "symfony/finder":"^5.4 || ^6.0"
-
   },
   "require-dev": {
     "contao/manager-plugin": "^2.3.1"
