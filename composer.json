@@ -23,8 +23,8 @@
   ],
   "require": {
     "php": "^8.1",
-    "contao-thememanager/core": "^2.0",
-    "contao/core-bundle": "^4.13 || 5.1.* || 5.2.*",
+    "contao-thememanager/core": "^2.0.8",
+    "contao/core-bundle": "^4.13 || ^5.2",
     "oveleon/contao-theme-compiler-bundle": "^1.6.1",
     "oveleon/contao-theme-manager-bridge": "*",
     "symfony/finder":"^5.4 || ^6.0"
