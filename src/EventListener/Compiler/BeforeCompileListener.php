@@ -10,7 +10,7 @@ use Symfony\Component\Finder\Finder;
 
 class BeforeCompileListener
 {
-    private const PACKAGE_DIR  = 'files/theme/packages';
+    private const PACKAGE_DIR  = 'files/theme';
     private const PACKAGE_NAME = '_packages.scss';
 
     private FileCompiler $compiler;
@@ -52,7 +52,7 @@ class BeforeCompileListener
 
             foreach ($this->files as $file)
             {
-                $scss .= '@import "' . Path::normalize($file->getRelativePathname()) . '";' . PHP_EOL;
+                $scss .= '@import "packages/' . Path::normalize($file->getRelativePathname()) . '";' . PHP_EOL;
             }
         }
 
@@ -64,6 +64,11 @@ class BeforeCompileListener
      */
     private function createPackagesFile(array $files): void
     {
+        if ($this->compiler->fileExists(self::PACKAGE_DIR . '/packages/' . self::PACKAGE_NAME))
+        {
+            unlink(self::PACKAGE_DIR . '/packages/' . self::PACKAGE_NAME);
+        }
+
         $objFile = new File(self::PACKAGE_DIR . '/' . self::PACKAGE_NAME);
         $blnSuccess = $objFile->write($this->createPackagesSCSS());
         $objFile->close();
@@ -83,7 +88,7 @@ class BeforeCompileListener
 
     private function dirExists(): bool|string
     {
-        $strDirPath = self::PACKAGE_DIR;
+        $strDirPath = self::PACKAGE_DIR . '/packages';
 
         // Check the source file
         if (!is_dir($this->rootDir . '/' . $strDirPath))
